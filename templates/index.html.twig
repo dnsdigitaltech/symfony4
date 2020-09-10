@@ -1,15 +1,22 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Minha Primeira View com Twig</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}
-            <h1>Minha Primeira View com Twig</h1>
-        {% endblock %}            
-        {% block javascripts %}
-        {% endblock %}
-    </body>
-</html>
+{% extends "base.html.twig" %}
+{% block body %}
+    {% if title is defined %}
+        <h1>{{title ~ ' String'}}</h1>
+    {% endif %}
+
+    {# Listas de Postagens #}
+    <ul>
+    {% for post in posts %}
+        <li>{{ post.id }} - {{ post.title }} - {{ post.created_at|date("d/m/Y H:m:s") }}</li>
+    {% endfor %}
+    </ul>
+    {# Listas de Postagens #}
+    {% include "include.html.twig" %}
+
+    {{ 'Davi ' ~ ' Bernardo' }}
+    <br>
+    {{ 9*4 }}
+
+{% endblock %}            
+{% block javascripts %}
+{% endblock %}

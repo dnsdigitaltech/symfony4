@@ -63,4 +63,22 @@ class PostController extends AbstractController
             'post' => $post
         ]);
     }
+
+    /**
+     * @Route("/update/{id}", name="update")
+     */
+    public function update(Request $request, $id)
+    {
+        $data = $request->request->all();
+
+        $post = $this->getDoctrine()->getRepository(Post::class)->find($id);
+        $post->setTitle($data['title']);
+        $post->setDescription($data['description']);
+        $post->setContent($data['content']);
+        $post->setSlug($data['slug']);
+        $post->setUpdatedAt(new \DateTime('now', new \DateTimeZone('America/Sao_Paulo')));
+ 
+        $doctrine = $this->getDoctrine()->getManager();
+        $doctrine->flush();
+    }
 }

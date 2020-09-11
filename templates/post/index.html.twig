@@ -17,7 +17,7 @@
             <li>
                 {{post.id}} - {{post.title}} - {{post.createdAt|date('d/m/Y H:i:s')}} 
                 <a href="{{path('post_edit', {'id': post.id})}}">Editar</a> | 
-                <a href="#">Apagar</a>
+                <a href="{{path('post_remove', {'id': post.id})}}">Apagar</a>
             </li>
         {% endfor %}
     </ul>

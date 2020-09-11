@@ -50,7 +50,8 @@ class PostController extends AbstractController
         $doctrine = $this->getDoctrine()->getManager();
         $doctrine->persist($post);
         $doctrine->flush();
-
+        
+        return $this->redirectToRoute('post_index');
     }
 
     /**
@@ -82,5 +83,22 @@ class PostController extends AbstractController
  
         $doctrine = $this->getDoctrine()->getManager();
         $doctrine->flush();
+
+        return $this->redirectToRoute('post_index');
+    }
+
+    /**
+     * @Route("/remove{id}", name="remove")
+     */
+    public function remove($id)
+    {
+        $post = $this->getDoctrine()
+                     ->getRepository(Post::class)
+                     ->find($id);
+        $manager = $this->getDoctrine()->getManager();
+        $manager->remove($post);
+        $manager->flush();
+
+        return $this->redirectToRoute('post_index');
     }
 }

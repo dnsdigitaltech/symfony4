@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Post;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,6 +35,19 @@ class PostController extends AbstractController
      */
     public function save(Request $request)
     {
-        dd($request->request->all());
+        $data = $request->request->all();
+
+        $post = new Post();
+        $post->setTitle($data['title']);
+        $post->setDescription($data['description']);
+        $post->setContent($data['content']);
+        $post->setSlug($data['slug']);
+        $post->setCreatedAt(new \DateTime('now', new \DateTimeZone('America/Sao_Paulo')));
+        $post->setUpdatedAt(new \DateTime('now', new \DateTimeZone('America/Sao_Paulo')));
+ 
+        $doctrine = $this->getDoctrine()->getManager();
+        $doctrine->persist($post);
+        $doctrine->flush();
+
     }
 }

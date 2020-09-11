@@ -26,9 +26,13 @@ class UserController extends AbstractController
             $user->setCreatedAt(new \DateTime('now', new \DateTimeZone('America/Sao_Paulo')));
             $user->setUpdatedAt(new \DateTime('now', new \DateTimeZone('America/Sao_Paulo')));
 
-            dd($user);
-        }
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($user);
+            $manager->flush();
 
+            $this->addFlash('success', 'Usuário criado com sucesso!');
+            return $this->redirectToRoute('user_create');
+        }
         return $this->render('user/index.html.twig', [
             'form' => $form->createView()
         ]);

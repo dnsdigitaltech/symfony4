@@ -50,4 +50,17 @@ class PostController extends AbstractController
         $doctrine->flush();
 
     }
+
+    /**
+     * @Route("/edit/{id}", name="edit")
+     */
+    public function edit($id)
+    {
+        $post = $this->getDoctrine()
+                     ->getRepository(Post::class)
+                     ->find($id);
+        return $this->render('post/edit.html.twig', [
+            'post' => $post
+        ]);
+    }
 }

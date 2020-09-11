@@ -33,7 +33,33 @@ class UserController extends AbstractController
             $this->addFlash('success', 'Usuário criado com sucesso!');
             return $this->redirectToRoute('user_create');
         }
-        return $this->render('user/index.html.twig', [
+        return $this->render('user/create.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/edit/{id}", name="edit")
+     */
+    public function edit(Request $request, $id)
+    {
+        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+        
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted()){
+            $user = $form->getData();
+            $user->setCreatedAt(new \DateTime('now', new \DateTimeZone('America/Sao_Paulo')));
+            $user->setUpdatedAt(new \DateTime('now', new \DateTimeZone('America/Sao_Paulo')));
+
+            $manager = $this->getDoctrine()->getManager();
+            $manager->flush();
+            
+            $this->addFlash('success', 'Usuário editado com sucesso!');
+            return $this->redirectToRoute('user_edit', ['id' => $id]);
+        }
+        return $this->render('user/edit.html.twig', [
             'form' => $form->createView()
         ]);
     }

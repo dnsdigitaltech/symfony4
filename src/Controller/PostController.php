@@ -50,7 +50,8 @@ class PostController extends AbstractController
         $doctrine = $this->getDoctrine()->getManager();
         $doctrine->persist($post);
         $doctrine->flush();
-        
+
+        $this->addFlash('success', 'Post Cadastrado com Sucesso!');
         return $this->redirectToRoute('post_index');
     }
 
@@ -84,6 +85,7 @@ class PostController extends AbstractController
         $doctrine = $this->getDoctrine()->getManager();
         $doctrine->flush();
 
+        $this->addFlash('success', 'Post Atualizado com Sucesso!');
         return $this->redirectToRoute('post_index');
     }
 
@@ -99,6 +101,7 @@ class PostController extends AbstractController
         $manager->remove($post);
         $manager->flush();
 
+        $this->addFlash('success', 'Post Removido com Sucesso!');
         return $this->redirectToRoute('post_index');
     }
 }

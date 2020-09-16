@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Form\PostType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,9 +28,30 @@ class PostController extends AbstractController
     /**
      * @Route("/create", name="create")
      */
-    public function create()
+    public function create(Request $request)
     {
-        return $this->render('post/create.html.twig');
+        /*return $this->render('post/create.html.twig',
+            ['form' => $form->createView()]);*/
+        
+        $post = new Post();
+        $form = $this->createForm(PostType::class);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted()){
+            $post = $form->getData();
+            $post->setCreatedAt(new \DateTime('now', new \DateTimeZone('America/Sao_Paulo')));
+            $post->setUpdatedAt(new \DateTime('now', new \DateTimeZone('America/Sao_Paulo')));
+
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($post);
+            $manager->flush();
+
+            $this->addFlash('success', 'Usuário criado com sucesso!');
+            return $this->redirectToRoute('post_index');
+        }
+        return $this->render('post/create.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     /**
@@ -37,7 +59,7 @@ class PostController extends AbstractController
      */
     public function save(Request $request)
     {
-        $data = $request->request->all();
+        /*$data = $request->request->all();
 
         $post = new Post();
         $post->setTitle($data['title']);
@@ -52,19 +74,39 @@ class PostController extends AbstractController
         $doctrine->flush();
 
         $this->addFlash('success', 'Post Cadastrado com Sucesso!');
-        return $this->redirectToRoute('post_index');
+        return $this->redirectToRoute('post_index');*/
     }
 
     /**
      * @Route("/edit/{id}", name="edit")
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        $post = $this->getDoctrine()
+        /*$post = $this->getDoctrine()
                      ->getRepository(Post::class)
                      ->find($id);
         return $this->render('post/edit.html.twig', [
             'post' => $post
+        ]);*/
+            
+        $post = $this->getDoctrine()->getRepository(Post::class)->find($id);
+        
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted()){
+            $post = $form->getData();
+            $post->setCreatedAt(new \DateTime('now', new \DateTimeZone('America/Sao_Paulo')));
+            $post->setUpdatedAt(new \DateTime('now', new \DateTimeZone('America/Sao_Paulo')));
+
+            $manager = $this->getDoctrine()->getManager();
+            $manager->flush();
+            
+            $this->addFlash('success', 'Usuário editado com sucesso!');
+            return $this->redirectToRoute('post_edit', ['id' => $id]);
+        }
+        return $this->render('post/edit.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 
@@ -73,7 +115,7 @@ class PostController extends AbstractController
      */
     public function update(Request $request, $id)
     {
-        $data = $request->request->all();
+        /*$data = $request->request->all();
 
         $post = $this->getDoctrine()->getRepository(Post::class)->find($id);
         $post->setTitle($data['title']);
@@ -86,7 +128,7 @@ class PostController extends AbstractController
         $doctrine->flush();
 
         $this->addFlash('success', 'Post Atualizado com Sucesso!');
-        return $this->redirectToRoute('post_index');
+        return $this->redirectToRoute('post_index');*/
     }
 
     /**

@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 {% block body %}
-    <form action="{{ path('post_save') }}" method="post">
+    {# <form method="post">
         <div class="form-group">
             <label for="name">Título da Postagem</label>
             <input type="text" class="form-control" id="name" name="title">
@@ -20,7 +20,11 @@
         <div class="form-group">
             <button type="submit" class="btn btn-lg btn-success">Criar Postagem</button>
         </div>
-    </form>
+    </form>#}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button type="submit" class="btn btn-lg btn-success">Criar Postagem</button>
+    {{ form_end(form) }}
 {% endblock %}    
 
 

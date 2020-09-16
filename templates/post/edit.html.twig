@@ -1,25 +1,25 @@
 {% extends "base.html.twig" %}
 {% block body %}
     <form action="{{ path('post_update', {'id': post.id}) }}" method="post">
-        <p>
-            <label>Título da Postagem</label>
-            <input type="text" name="title" value="{{ post.title }}">
-        </p>
-        <p>
-            <label>Descrição da Postagem</label>
-            <input type="text" name="description" value="{{ post.description }}">
-        </p>
-        <p>
-            <label>Conteúdo da Postagem</label>
-            <textarea name="content" id="" cols="30" rows="10">{{ post.content }}</textarea>
-        </p>
-        <p>
-            <label>slug</label>
-            <input type="text" name="slug" value="{{ post.slug }}">
-        </p>
-        <p>
-            <button type="submit">Criar Postagem</button>
-        </p>
+        <div class="form-group">
+            <label for="name">Título da Postagem</label>
+            <input type="text" class="form-control" id="name" name="title" value="{{ post.title }}">
+        </div>
+        <div class="form-group">
+            <label for="description">Descrição da Postagem</label>
+            <input type="text" class="form-control" id="description" name="description" value="{{ post.description }}">
+        </div>
+        <div class="form-group">
+            <label for="content">Conteúdo da Postagem</label>
+            <textarea name="content" class="form-control" id="content" id="" cols="30" rows="10">{{ post.content }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="slug">slug</label>
+            <input type="text"  class="form-control" name="slug" id="slug" value="{{ post.slug }}">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-lg btn-primary">Criar Postagem</button>
+        </div>
     </form>
 {% endblock %}    
 

@@ -4,9 +4,9 @@
 
 {% block body %}
 <h1> Usuários </h1>
-<a href="{{ path('user_create') }}">Criar Usuário</a>
+<a href="{{ path('user_create') }}" class="btn btn-sm btn-success">Criar Usuário</a>
 <hr>
-<table> 
+<table class="table"> 
     <thead>
         <tr>
             <th>Nome</th>
@@ -24,8 +24,8 @@
             <td>{{ user.email }}</td>
             <td>{{ user.createdAt|date('d/m/Y H:i:s') }}</td>
             <td>
-                <a href="{{ path('user_edit', {'id': user.id}) }}">Editar</a>
-                <a href="{{ path('user_remove', {'id': user.id}) }}">remover</a>
+                <a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-sm btn-primary">Editar</a>
+                <a href="{{ path('user_remove', {'id': user.id}) }}" class="btn btn-sm btn-danger">remover</a>
             </td>
         </tr>
     {% endfor %}

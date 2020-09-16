@@ -12,6 +12,19 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserController extends AbstractController
 {
+
+    /**
+     * @Route("/", name="index")
+     */
+    public function index()
+    {
+        $users = $this->getDoctrine()
+                      ->getRepository(User::class)
+                      ->findAll();
+
+        return $this->render('user/index.html.twig', ['users' => $users]);
+    }
+
     /**
      * @Route("/create", name="create")
      */
@@ -31,7 +44,7 @@ class UserController extends AbstractController
             $manager->flush();
 
             $this->addFlash('success', 'Usuário criado com sucesso!');
-            return $this->redirectToRoute('user_create');
+            return $this->redirectToRoute('user_index');
         }
         return $this->render('user/create.html.twig', [
             'form' => $form->createView()

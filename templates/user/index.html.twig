@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Usuários{% endblock %}
+
+{% block body %}
+<h1> Usuários </h1>
+<a href="{{ path('user_create') }}">Criar Usuário</a>
+<hr>
+<table> 
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Sobrenome</th>
+            <th>Email</th>
+            <th>Criado em</th>
+            <th>Ações</th>
+        </tr>
+    </tread>
+    <tbody>
+    {% for user in users %}
+        <tr>
+            <td>{{ user.firstname }}</td>
+            <td>{{ user.lastname }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.createdAt|date('d/m/Y H:i:s') }}</td>
+            <td><a href="{{ path('user_edit', {'id': user.id}) }}">Editar</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}
